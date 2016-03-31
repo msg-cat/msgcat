@@ -1,0 +1,23 @@
+{
+  "name": "msgcat",
+  "version": "0.0.1",
+  "description": "jo!",
+  "main": "src/msgcat.js",
+  "scripts": {
+    "test": "nope"
+  },
+  "repository": {
+    "type": "git",
+    "url": "nope"
+  },
+  "keywords": [
+    "nope"
+  ],
+  "author": "nope",
+  "license": "nope",
+  "dependencies": {
+    "react": "^0.14.8",
+    "react-dom": "^0.14.8",
+    "strophe": "^1.2.4"
+  }
+}
