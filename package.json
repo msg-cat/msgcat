@@ -20,7 +20,9 @@
   },
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "watch": "webpack --config webpack.config.js --watch"
+    "watch": "webpack --config webpack.config.js --watch",
+    "build-css": "scss style/main.scss build/msgcat.css",
+    "watch-css": "scss --watch style/main.scss:build/msgcat.css"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
