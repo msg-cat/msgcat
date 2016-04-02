@@ -1,4 +1,6 @@
 import React from 'react';
+import MessageDraft from './MessageDraft';
+import ChatMessage from './ChatMessage';
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -9,7 +11,8 @@ export default class Chat extends React.Component {
   render() {
     return (
       <div>
-        <span>some other stuff</span>
+        {this.props.chat.messages.forEach((m, i) => <ChatMessage {...m} key={i} />)}
+        <MessageDraft {...this.props} />
       </div>
     );
   }

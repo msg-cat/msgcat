@@ -9,7 +9,7 @@ export default class SideBar extends React.Component {
   render() {
     return (
       <div id="SideBar">
-        <span>some stuff</span>
+        <Roster {...this.props.roster} />
       </div>
     );
   }

@@ -1,3 +1,3 @@
 window.msgcatConfig = {
-  server: 'http://hca.local:5280/'
+  server: 'http://localhost:5280/http-bind/'
 };

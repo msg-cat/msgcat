@@ -1,12 +1,14 @@
-{
-  entry: ['src/msgcat.js'],
-  output: 'build/msgcat.js',
+module.exports = {
+  entry: './src/msgcat.js',
+  output: {
+    filename: './build/msgcat.js',
+  },
   module: {
     loaders: [
       {
-        include: 'src/',
+        exclude: /node_modules/,
         test: /\.jsx?$/,
-        loaders: ['babel']
+        loader: 'babel-loader'
       }
     ]
   }

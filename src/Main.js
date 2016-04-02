@@ -11,8 +11,8 @@ export default class Main extends React.Component {
   render() {
     return (
       <div id="main">
-        <SideBar />
-        <Chat />
+        <SideBar {...this.props} />
+        <Chat {...this.props} />
       </div>
     );
   }
