@@ -10,7 +10,7 @@ export default class Chat extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="chat">
         {this.props.chat.messages.forEach((m, i) => <ChatMessage {...m} key={i} />)}
         <MessageDraft {...this.props} />
       </div>

@@ -14,10 +14,12 @@ export default {
       throw new Error("Dispatching within dispatch!");
     }
     dispatching = true;
-    try {
-      handlers[type].forEach(h => h(...args));
-    } catch(exc) {
-      console.error(exc);
+    if(handlers[type]) {
+      try {
+        handlers[type].forEach(h => h(...args));
+      } catch(exc) {
+        console.error(exc);
+      }
     }
     dispatching = false;
   },

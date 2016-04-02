@@ -1,1 +1,26 @@
 
+$sidebar_background: #333;
+$sidebar_color: #ddd;
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#sidebar {
+    width: 300px;
+    float: left;
+    background: $sidebar_background;
+    color: $sidebar_color;
+    padding-left: 20px;
+}
+
+#chat {
+    margin-left: 310px;
+
+    .message-draft {
+        position: fixed;
+        bottom: 0px;
+        left: 320px;
+    }
+}

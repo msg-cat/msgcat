@@ -23,8 +23,7 @@ export default class Layout extends React.Component {
       },
       state: undefined,
       draft: '',
-      recipient: '',
-      roster: {}
+      recipient: ''
     };
 
     this.restoreState();
@@ -54,9 +53,21 @@ export default class Layout extends React.Component {
       this.connection.send(msg);
       this.addMessage(msg);
     });
+
+    window.addEventListener('resize', () => this.setState({ windowSize: this._determineSize() }));
+    this.state.windowSize = this._determineSize();
   }
 
   render() {
+    return (
+      <div>
+        <style>{this._css()}</style>
+        {this._render()}
+      </div>
+    );
+  }
+
+  _render() {
     this.saveState();
     switch(this.state.connection.status) {
     case Strophe.Status.ERROR:
@@ -76,15 +87,17 @@ export default class Layout extends React.Component {
     default:
       return <strong>Not sure: {this.state.connection.status}</strong>;
     }
-    // if(this.state.connected) {
-    //   return <Main {...this.state} />
-    // } else {
-    
-    // }
   }
 
   updateStatus(status) {
     Dispatcher.dispatch('update-connection', 'status', status);
+    if(status == Strophe.Status.CONNECTED) {
+      this.connection.send($pres());
+      Dispatcher.dispatch('connection', this.connection);
+      this.connection.addHandler(stanza => {
+        console.log('stanza', stanza);
+      });
+    }
   }
 
   saveState() {
@@ -105,6 +118,20 @@ export default class Layout extends React.Component {
     let chat = this.state.chat;
     chat.messages = chat.messages.concat([msg]);
     this.setState({ chat: chat });
+  }
+
+  _determineSize() {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+  }
+
+  _css() {
+    return [
+      `#sidebar { height: ${this.state.windowSize.height}px; }`,
+      `#chat { height: ${this.state.windowSize.height}px; }`
+    ].join('\n');
   }
 }
 

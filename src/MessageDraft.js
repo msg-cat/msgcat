@@ -11,7 +11,6 @@ export default class MessageDraft extends React.Component {
     return (
       <div className="message-draft">
         <form onSubmit={e => this.handleSubmit(e)}>
-          <input type="text" autoComplete="off" value={this.props.recipient} onChange={e => this.handleRecipientChange(e)} />
           <input type="text" autoComplete="off" value={this.props.draft.body} onChange={e => this.handleChange(e)} />
           <button type="submit">Send</button>
         </form>
@@ -26,9 +25,5 @@ export default class MessageDraft extends React.Component {
 
   handleChange(e) {
     Dispatcher.dispatch('update-draft', e.target.value);
-  }
-
-  handleRecipientChange(e) {
-    Dispatcher.dispatch('update-recipient', e.target.value);
   }
 }

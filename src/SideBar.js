@@ -1,4 +1,5 @@
 import React from 'react';
+import Roster from './Roster';
 
 export default class SideBar extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class SideBar extends React.Component {
 
   render() {
     return (
-      <div id="SideBar">
+      <div id="sidebar">
         <Roster {...this.props.roster} />
       </div>
     );
