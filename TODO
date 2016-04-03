@@ -1,0 +1,27 @@
+# -*- mode:org -*-
+
+* Register
+This is not implemented at all yet.
+To register, the client needs to:
+- connect to the server
+- retrieve registration form from the server
+- fill out the values, then send them to the server
+- wait for registration result, then authenticate
+
+Some functionality for this is implemented in strophe.register.js (strophejs-plugins).
+
+* Login / Connect
+** TODO Give this page some nice CSS
+** TODO Add input for changing the BOSH endpoint (to connect to a different server)
+* Roster
+** TODO Improve rendering of contact list (colored dots for presence, some indication for pending subscriptions)
+** TODO Add controls for editing a contact
+** TODO Add widget to manage all status
+* Conversation List
+** TODO Implement conversation *list* store
+** TODO Implement store for *single* conversation
+* Backlog / Message Archives
+** TODO Load backlog when opening a conversation
+   (for this the server needs to implement message archive management)
+** TODO Add functionality for browsing and searching the archives
+
