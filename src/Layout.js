@@ -36,6 +36,10 @@ export default class Layout extends React.Component {
 
     Dispatcher.register('connect', () => {
       this.connection = new Strophe.Connection(this.state.connection.boshService);
+      this.connection.addHandler(stanza => {
+        console.log('stanza', stanza);
+        return true;
+      });
       this.connection.connect(this.state.connection.jid,
                               this.state.connection.password,
                               status => this.updateStatus(status));
@@ -94,9 +98,6 @@ export default class Layout extends React.Component {
     if(status == Strophe.Status.CONNECTED) {
       this.connection.send($pres());
       Dispatcher.dispatch('connection', this.connection);
-      this.connection.addHandler(stanza => {
-        console.log('stanza', stanza);
-      });
     }
   }
 
