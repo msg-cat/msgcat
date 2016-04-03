@@ -2,9 +2,14 @@
 $sidebar_background: #333;
 $sidebar_color: #ddd;
 
+$presence_available: #afa;
+$presence_unavailable: #faa;
+$presence_away: #aaf;
+
 body {
     margin: 0;
     padding: 0;
+    font-family: sans-serif;
 }
 
 #sidebar {
@@ -13,6 +18,30 @@ body {
     background: $sidebar_background;
     color: $sidebar_color;
     padding-left: 20px;
+
+    .channel-list {
+        list-style: none;
+        padding: 0;
+
+        .channel {
+            .presence-icon {
+                display: inline-block;
+                margin-right: 3px;
+            }
+
+            &[data-presence=""] .presence-icon {
+                color: $presence_available;
+            }
+
+            &[data-presence="unavailable"] .presence-icon {
+                color: $presence_unavailable;
+            }
+
+            &[data-presence="away"] .presence-icon {
+                color: $presence_away;
+            }
+        }
+    }
 }
 
 #chat {

@@ -15,18 +15,9 @@ export default class Roster extends React.Component {
       <div className="roster">
         <h3>Contacts</h3>
         {this._renderAddForm()}
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th title="Subscription">Sub</th>
-              <th title="Presence">Pres</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.items.map(item => this._renderItem(item))}
-          </tbody>
-        </table>
+        <ul className="channel-list">
+          {this.state.items.map(item => this._renderItem(item))}
+        </ul>
         {this.state.subscriptions.length > 0 && this._renderSubscriptions()}
       </div>
     );
@@ -43,11 +34,13 @@ export default class Roster extends React.Component {
 
   _renderItem(item) {
     return (
-      <tr key={item.jid}>
-        <td title={item.jid}>{item.name}</td>
-        <td>{item.subscription}</td>
-        <td>{this._jidPresence(item.jid)}</td>
-      </tr>
+      <li className="channel channel-private"
+          data-subscription={item.subscription}
+          data-presence={this._jidPresence(item.jid)}
+          key={item.jid} title={item.jid}>
+        <span className="presence-icon">●</span>
+        {item.name ? item.name : item.jid}
+      </li>
     );
   }
 
