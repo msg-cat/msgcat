@@ -1,6 +1,8 @@
 import Dispatcher from '../Dispatcher';
 import util from '../util';
 
+import BasicStore from './BasicStore';
+
 // Class: RosterStore
 //
 // Manages the roster, presence and subscriptions.
@@ -12,21 +14,9 @@ import util from '../util';
 // Additionally it implements actions for managing the roster, the user's
 // own prsesence and incoming presence subscriptions.
 //
-export default class RosterStore {
+export default class RosterStore extends BasicStore {
   constructor() {
-    Dispatcher.register('connection', connection => {
-      this.connection = connection;
-      this.connection.roster.get();
-      this.connection.roster.registerCallback(this._rosterChanged.bind(this));
-      this.connection.addHandler(this._onPresence.bind(this), undefined, 'presence');
-      this.state.me = {
-        jid: util.bareJID(connection.jid),
-        resource: util.resourceFromJID(connection.jid)
-      };
-      this.setMyPresence('available');
-    });
-
-    this.state = {
+    super({
       // list of items stored in the roster
       items: [],
       // map of bare JIDs to a presence object.
@@ -37,21 +27,30 @@ export default class RosterStore {
       me: {
         jid: '',
         resource: '',
-        presence: ''
+        presence: 'available'
       }
-    };
+    }, 'roster-store');
+  }
 
-    this._changeHandlers = []
+  // INTERNAL. called by ConnectionStore, once a connection is established.
+  setConnection(connection) {
+    this.connection = connection;
+    this.connection.roster.get();
+    this.connection.roster.registerCallback(this._rosterChanged.bind(this));
+    this.connection.addHandler(this._onPresence.bind(this), undefined, 'presence');
+    this.state.me.jid = util.bareJID(connection.jid);
+    this.state.me.resource = util.resourceFromJID(connection.jid);
+    this.setMyPresence(this.state.me.presence);
   }
 
   // Set (and publish) the user's own presence
   setMyPresence(show) {
+    this.state.me.presence = show;
     if(show === 'available') {
       show = '';
     }
     let update = $pres().c('show').t(show).up().tree();
     this.connection.send(update);
-    console.log('sent presence update', update, '(want: ' + show + ')');
     this._changed();
   }
 
@@ -83,13 +82,6 @@ export default class RosterStore {
     this._changed();
   }
 
-  // Installs a handler to be called whenever this store's state changes.
-  // This is to be used by components that are interested in this store's
-  // state.
-  onChange(handler) {
-    this._changeHandlers.push(handler);
-  }
-
   _rosterChanged(items, ...rest) {
     this.state.items = items;
     this._changed();
@@ -117,9 +109,5 @@ export default class RosterStore {
       console.error(e);
     }
     return true;
-  }
-
-  _changed() {
-    this._changeHandlers.forEach(h => h());
   }
 }

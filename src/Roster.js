@@ -1,11 +1,11 @@
 import React from 'react';
-import RosterStore from './stores/RosterStore';
 import util from './util';
+import world from './world';
 
 export default class Roster extends React.Component {
   constructor(props) {
     super(props);
-    this.store = new RosterStore();
+    this.store = world.roster;
     this.state = this.store.state;
     this.store.onChange(() => this.setState(this.store.state));
   }
@@ -81,7 +81,6 @@ export default class Roster extends React.Component {
   _jidPresence(jid) {
     let pres = this.state.presence[util.bareJID(jid)];
     let show = pres ? pres.show : 'unavailable';
-    console.log('jid', jid, 'show', show);
     return show;
   }
 

@@ -7,56 +7,16 @@ import Connect from './Connect';
 
 import Dispatcher from './Dispatcher';
 
+import world from './world';
+
 const Strophe = window.Strophe;
 
 export default class Layout extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      connection: {
-        boshService: props.server,
-        jid: '',
-        password: ''
-      },
-      chat: {
-        messages: []
-      },
-      state: undefined,
-      draft: '',
-      recipient: ''
-    };
+    this.state = world.state;
 
-    this.restoreState();
-
-    Dispatcher.register('update-connection', (key, value) => {
-      let conn = this.state.connection;
-      conn[key] = value;
-      this.setState({ connection: conn })
-    });
-
-    Dispatcher.register('connect', () => {
-      this.connection = new Strophe.Connection(this.state.connection.boshService);
-      this.connection.addHandler(stanza => {
-        console.log('stanza', stanza);
-        return true;
-      });
-      this.connection.connect(this.state.connection.jid,
-                              this.state.connection.password,
-                              status => this.updateStatus(status));
-    });
-
-    Dispatcher.register('update-draft', body => this.setState({ draft: body }));
-    Dispatcher.register('update-recipient', recipient => this.setState({ recipient: recipient }));
-    Dispatcher.register('commit-draft', body => {
-      let msg = $msg({
-        to: this.state.recipient,
-        body: body,
-        type: 'chat',
-        id: generateMessageId()
-      })
-      this.connection.send(msg);
-      this.addMessage(msg);
-    });
+    world.onChange(() => this.setState(world.state));
 
     window.addEventListener('resize', () => this.setState({ windowSize: this._determineSize() }));
     this.state.windowSize = this._determineSize();
@@ -121,6 +81,9 @@ export default class Layout extends React.Component {
     this.setState({ chat: chat });
   }
 
+  // returns current size of the app
+  // (this is equal to the window size, but may change in
+  //  the future to account for browser quirks)
   _determineSize() {
     return {
       width: window.innerWidth,
@@ -128,6 +91,7 @@ export default class Layout extends React.Component {
     };
   }
 
+  // returns dynamic CSS declarations
   _css() {
     return [
       `#sidebar { height: ${this.state.windowSize.height}px; }`,
