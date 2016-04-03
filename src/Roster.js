@@ -13,6 +13,11 @@ export default class Roster extends React.Component {
   render() {
     return (
       <div className="roster">
+        <h3>{this.state.me.jid}</h3>
+        <select onChange={e => this._updatePresence(e)} value={this.state.me.presence}>
+          <option value="available">Available</option>
+          <option value="away">Away</option>
+        </select>
         <h3>Contacts</h3>
         {this._renderAddForm()}
         <ul className="channel-list">
@@ -38,7 +43,7 @@ export default class Roster extends React.Component {
           data-subscription={item.subscription}
           data-presence={this._jidPresence(item.jid)}
           key={item.jid} title={item.jid}>
-        <span className="presence-icon">●</span>
+        <span className="presence-icon" />
         {item.name ? item.name : item.jid}
       </li>
     );
@@ -75,7 +80,9 @@ export default class Roster extends React.Component {
 
   _jidPresence(jid) {
     let pres = this.state.presence[util.bareJID(jid)];
-    return pres ? pres.type : '(n/a)';
+    let show = pres ? pres.show : 'unavailable';
+    console.log('jid', jid, 'show', show);
+    return show;
   }
 
   _acceptSub(jid) {
@@ -84,5 +91,9 @@ export default class Roster extends React.Component {
 
   _rejectSub(jid) {
     this.store.rejectSubscription(jid);
+  }
+
+  _updatePresence(e) {
+    this.store.setMyPresence(e.target.value);
   }
 }

@@ -19,6 +19,11 @@ export default class RosterStore {
       this.connection.roster.get();
       this.connection.roster.registerCallback(this._rosterChanged.bind(this));
       this.connection.addHandler(this._onPresence.bind(this), undefined, 'presence');
+      this.state.me = {
+        jid: util.bareJID(connection.jid),
+        resource: util.resourceFromJID(connection.jid)
+      };
+      this.setMyPresence('available');
     });
 
     this.state = {
@@ -27,10 +32,27 @@ export default class RosterStore {
       // map of bare JIDs to a presence object.
       presence: {},
       // incoming presence subscriptions
-      subscriptions: []
+      subscriptions: [],
+      // information on the connected user
+      me: {
+        jid: '',
+        resource: '',
+        presence: ''
+      }
     };
 
     this._changeHandlers = []
+  }
+
+  // Set (and publish) the user's own presence
+  setMyPresence(show) {
+    if(show === 'available') {
+      show = '';
+    }
+    let update = $pres().c('show').t(show).up().tree();
+    this.connection.send(update);
+    console.log('sent presence update', update, '(want: ' + show + ')');
+    this._changed();
   }
 
   // Add the given contact to the roster. This sends a presence subscription.
@@ -74,6 +96,7 @@ export default class RosterStore {
   }
 
   _onPresence(presence) {
+    try {
     let type = presence.getAttribute('type');
     let from = presence.getAttribute('from');
     if(type == 'subscribe') {
@@ -85,10 +108,14 @@ export default class RosterStore {
       if(!pres) {
         pres = {};
       }
-      pres.type = type;
+      let showElement = presence.getElementsByTagName('show')[0];
+      pres.show = showElement ? showElement.textContent || 'available' : 'unavailable';
       this.state.presence[util.bareJID(from)] = pres;
     }
-    this._changed();
+      this._changed();
+    } catch(e) {
+      console.error(e);
+    }
     return true;
   }
 

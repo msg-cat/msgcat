@@ -2,10 +2,6 @@
 $sidebar_background: #333;
 $sidebar_color: #ddd;
 
-$presence_available: #afa;
-$presence_unavailable: #faa;
-$presence_away: #aaf;
-
 body {
     margin: 0;
     padding: 0;
@@ -29,16 +25,18 @@ body {
                 margin-right: 3px;
             }
 
-            &[data-presence=""] .presence-icon {
-                color: $presence_available;
-            }
-
-            &[data-presence="unavailable"] .presence-icon {
-                color: $presence_unavailable;
+            &[data-presence="available"] .presence-icon {
+                &::before { content: '●'; }
             }
 
             &[data-presence="away"] .presence-icon {
-                color: $presence_away;
+                color: $sidebar_color / 2;
+                &::before { content: '●'; }
+            }
+
+            &[data-presence="unavailable"] .presence-icon {
+                color: $sidebar_color / 2;
+                &::before { content: '○'; }
             }
         }
     }
