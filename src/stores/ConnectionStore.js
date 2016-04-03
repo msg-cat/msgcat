@@ -2,6 +2,8 @@ import Dispatcher from '../Dispatcher';
 
 import BasicStore from './BasicStore';
 import RosterStore from './RosterStore';
+import ChannelsStore from './ChannelsStore';
+import PrivateChatsStore from './PrivateChatsStore';
 
 export default class ConnectionStore extends BasicStore {
   constructor(config) {
@@ -14,8 +16,11 @@ export default class ConnectionStore extends BasicStore {
       }
     }, 'connection-store');
 
-    this.roster = new RosterStore();
+    this.roster = new RosterStore(this);
+    this.channels = new ChannelsStore(this);
+    this.privateChats = new PrivateChatsStore(this);
 
+    // TODO: dispatch this from the real "world" (which controls the layout)!
     if(this.state.connection.status == Strophe.Status.CONNECTED) {
       Dispatcher.dispatchLater('connect');
     }
@@ -44,6 +49,8 @@ export default class ConnectionStore extends BasicStore {
     if(status == Strophe.Status.CONNECTED) {
       this.connection.send($pres());
       this.roster.setConnection(this.connection);
+      this.channels.setConnection(this.connection);
+      this.privateChats.setConnection(this.connection);
     }
   }
 

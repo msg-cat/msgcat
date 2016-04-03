@@ -15,7 +15,7 @@ import BasicStore from './BasicStore';
 // own prsesence and incoming presence subscriptions.
 //
 export default class RosterStore extends BasicStore {
-  constructor() {
+  constructor(world) {
     super({
       // list of items stored in the roster
       items: [],
@@ -30,6 +30,7 @@ export default class RosterStore extends BasicStore {
         presence: 'available'
       }
     }, 'roster-store');
+    this.world = world;
   }
 
   // INTERNAL. called by ConnectionStore, once a connection is established.
