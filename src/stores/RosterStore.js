@@ -28,9 +28,20 @@ export default class RosterStore extends BasicStore {
         jid: '',
         resource: '',
         presence: 'available'
-      }
+      },
+      // Currently selected JID (this is what will be displayed in main view)
+      selected: null
     }, 'roster-store');
     this.world = world;
+
+    if(this.state.selected) {
+      Dispatcher.dispatchLater('switch-to', this.state.selected);
+    }
+
+    Dispatcher.register('switch-to', jid => {
+      this.state.selected = jid;
+      this._changed();
+    });
   }
 
   // INTERNAL. called by ConnectionStore, once a connection is established.

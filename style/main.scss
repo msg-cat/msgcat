@@ -9,7 +9,7 @@ body {
 }
 
 #sidebar {
-    width: 300px;
+    width: 240px;
     float: left;
     background: $sidebar_background;
     color: $sidebar_color;
@@ -20,9 +20,25 @@ body {
         padding: 0;
 
         .channel {
+            cursor: pointer;
+            line-height: 1.5em;
+            margin-left: -5px;
+            padding-left: 5px;
+            margin-right: 10px;
+            border-radius: 5px;
+            margin-bottom: 2px;
+
             .presence-icon {
                 display: inline-block;
                 margin-right: 3px;
+            }
+
+            &:hover {
+                background: $sidebar_background * 1.25;
+            }
+
+            &[data-selected="true"] {
+                background: $sidebar_background * 1.5;
             }
 
             &[data-presence="available"] .presence-icon {

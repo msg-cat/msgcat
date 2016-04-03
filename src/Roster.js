@@ -1,6 +1,7 @@
 import React from 'react';
 import util from './util';
 import world from './world';
+import Dispatcher from './Dispatcher';
 
 export default class Roster extends React.Component {
   constructor(props) {
@@ -42,7 +43,9 @@ export default class Roster extends React.Component {
       <li className="channel channel-private"
           data-subscription={item.subscription}
           data-presence={this._jidPresence(item.jid)}
-          key={item.jid} title={item.jid}>
+          key={item.jid} title={item.jid}
+          data-selected={this.state.selected === item.jid}
+          onClick={() => Dispatcher.dispatch('switch-to', util.bareJID(item.jid))}>
         <span className="presence-icon" />
         {item.name ? item.name : item.jid}
       </li>
