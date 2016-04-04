@@ -1,2 +1,4 @@
 import ConnectionStore from './stores/ConnectionStore';
-export default new ConnectionStore(msgcatConfig);
+const world = new ConnectionStore(msgcatConfig);
+window.world = world;
+export default world
