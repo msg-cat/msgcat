@@ -1,0 +1,9 @@
+#chat {
+    margin-left: $sidebar_width + 10px;
+
+    .message-draft {
+        position: fixed;
+        bottom: 0px;
+        left: $sidebar_width + 20px;
+    }
+}

@@ -1,111 +1,16 @@
 
 $sidebar_background: #333;
 $sidebar_color: #ddd;
+$sidebar_width: 240px;
+
+* { margin: 0; padding: 0; }
 
 body {
-    margin: 0;
-    padding: 0;
     font-family: sans-serif;
 }
 
-#sidebar {
-    width: 240px;
-    float: left;
-    background: $sidebar_background;
-    color: $sidebar_color;
-    padding-left: 20px;
+@import "form";
 
-    .private-chats {
-        h3 {
-            position: relative;
-            .add-contact {
-                display: block;
-                position: absolute;
-                right: 20px;
-                top: 0px;
-                width: 16px;
-                height: 16px;
-                color: $sidebar_color * 0.8;
-                border: solid 2px $sidebar_color * 0.8;
-                border-radius: 12px;
-                text-align: center;
-                line-height: 16px;
-                font-weight: bold;
-                cursor: pointer;
-
-                &::before { content: '+'; }
-                &:hover {
-                    border-color: $sidebar_color;
-                    color: $sidebar_color;
-                }
-            }
-        }
-
-        .subscribe-form {
-            border-radius: 5px;
-            background: $sidebar_background * 1.5;
-
-            input, button {
-                background: none;
-                color: $sidebar_color;
-                font-size: 16px;
-                outline: none;
-                border: none;
-                display: inline-block;
-                width: 50%;
-            }
-        }
-    }
-
-    .channel-list {
-        list-style: none;
-        padding: 0;
-
-        .channel {
-            cursor: pointer;
-            line-height: 1.5em;
-            margin-left: -5px;
-            padding-left: 5px;
-            margin-right: 10px;
-            border-radius: 5px;
-            margin-bottom: 2px;
-
-            .presence-icon {
-                display: inline-block;
-                margin-right: 3px;
-            }
-
-            &:hover {
-                background: $sidebar_background * 1.25;
-            }
-
-            &[data-selected="true"] {
-                background: $sidebar_background * 1.5;
-            }
-
-            &[data-presence="available"] .presence-icon {
-                &::before { content: '●'; }
-            }
-
-            &[data-presence="away"] .presence-icon {
-                color: $sidebar_color / 2;
-                &::before { content: '●'; }
-            }
-
-            &[data-presence="unavailable"] .presence-icon {
-                color: $sidebar_color / 2;
-                &::before { content: '○'; }
-            }
-        }
-    }
-}
-
-#chat {
-    margin-left: 310px;
-
-    .message-draft {
-        position: fixed;
-        bottom: 0px;
-        left: 320px;
-    }
-}
+@import "connect";
+@import "sidebar";
+@import "chat";
