@@ -1,0 +1,184 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: sans-serif; }
+
+form .input-row {
+  margin-bottom: 10px; }
+  form .input-row label {
+    display: inline-block;
+    width: 120px; }
+  form .input-row input {
+    display: inline-block;
+    border: solid 1px #aaa;
+    border-radius: 5px;
+    line-height: 18px;
+    padding: 5px 10px;
+    outline: none;
+    width: 200px; }
+    form .input-row input:focus {
+      border-color: #333; }
+  form .input-row button {
+    border: solid 1px #aaa;
+    border-radius: 5px;
+    background: white;
+    color: #333;
+    cursor: pointer;
+    padding: 5px 20px;
+    outline: none; }
+    form .input-row button:hover {
+      border-color: #333; }
+
+#connect {
+  box-sizing: border-box;
+  width: 400px;
+  height: 180px;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+  border-radius: 10px;
+  border: solid 1px #333;
+  box-shadow: 0px 5px 5px 4px #999; }
+  #connect button {
+    display: block;
+    font-size: 16px;
+    position: absolute;
+    bottom: 30px; }
+    #connect button.connect {
+      right: 35px;
+      font-weight: bold;
+      background: #cfd; }
+    #connect button.register {
+      left: 20px; }
+
+#sidebar {
+  width: 240px;
+  float: left;
+  background: #333;
+  color: #ddd;
+  padding-left: 20px; }
+  #sidebar .connection-info {
+    background: #292929;
+    margin: 0 0 20px -20px;
+    padding: 5px 0 10px 20px;
+    position: relative;
+    height: 50px;
+    box-sizing: border-box; }
+    #sidebar .connection-info h3 {
+      margin-top: 10px; }
+    #sidebar .connection-info .dropdown-control {
+      position: absolute;
+      right: 10px;
+      top: 15px;
+      cursor: pointer;
+      color: #b1b1b1; }
+      #sidebar .connection-info .dropdown-control::before {
+        content: '▼'; }
+      #sidebar .connection-info .dropdown-control:hover {
+        color: white; }
+    #sidebar .connection-info .dropdown {
+      background: #ddd;
+      color: #333;
+      position: absolute;
+      top: 40px;
+      right: 10px;
+      padding: 10px 10px;
+      border-radius: 5px;
+      z-index: 100;
+      min-width: 180px; }
+      #sidebar .connection-info .dropdown .dropdown-item {
+        line-height: 25px;
+        border-top: solid 1px #474747;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 0 5px; }
+        #sidebar .connection-info .dropdown .dropdown-item:hover {
+          color: #ddd;
+          background: #474747; }
+        #sidebar .connection-info .dropdown .dropdown-item:first-child {
+          border-top: none; }
+  #sidebar .private-chats {
+    margin-bottom: 20px; }
+    #sidebar .private-chats h3 {
+      position: relative;
+      margin-bottom: 10px; }
+      #sidebar .private-chats h3 .add-contact {
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 0px;
+        width: 16px;
+        height: 16px;
+        color: #b1b1b1;
+        border: solid 2px #b1b1b1;
+        border-radius: 12px;
+        text-align: center;
+        line-height: 16px;
+        font-weight: bold;
+        cursor: pointer; }
+        #sidebar .private-chats h3 .add-contact::before {
+          content: '+'; }
+        #sidebar .private-chats h3 .add-contact:hover {
+          border-color: #ddd;
+          color: #ddd; }
+    #sidebar .private-chats .subscribe-form {
+      border-radius: 5px;
+      background: #4d4d4d; }
+      #sidebar .private-chats .subscribe-form input, #sidebar .private-chats .subscribe-form button {
+        background: none;
+        color: #ddd;
+        font-size: 16px;
+        outline: none;
+        border: none;
+        display: inline-block;
+        width: 50%; }
+  #sidebar .channel-list {
+    list-style: none; }
+    #sidebar .channel-list .channel {
+      cursor: pointer;
+      line-height: 1.5em;
+      margin-left: -5px;
+      padding-left: 5px;
+      margin-right: 10px;
+      border-radius: 5px;
+      margin-bottom: 2px; }
+      #sidebar .channel-list .channel .presence-icon {
+        display: inline-block;
+        margin-right: 3px; }
+      #sidebar .channel-list .channel:hover {
+        background: #404040; }
+      #sidebar .channel-list .channel[data-selected="true"] {
+        background: #4d4d4d; }
+      #sidebar .channel-list .channel[data-presence="available"] .presence-icon::before {
+        content: '●'; }
+      #sidebar .channel-list .channel[data-presence="away"] .presence-icon {
+        color: #6f6f6f; }
+        #sidebar .channel-list .channel[data-presence="away"] .presence-icon::before {
+          content: '●'; }
+      #sidebar .channel-list .channel[data-presence="unavailable"] .presence-icon {
+        color: #6f6f6f; }
+        #sidebar .channel-list .channel[data-presence="unavailable"] .presence-icon::before {
+          content: '○'; }
+
+#chat {
+  margin-left: 250px; }
+  #chat h3 {
+    height: 50px;
+    box-sizing: border-box;
+    border-bottom: solid 1px #aaa;
+    padding: 15px 0 10px 20px; }
+    #chat h3 .presence-hint {
+      display: inline-block;
+      margin-left: 15px;
+      font-size: 14px;
+      color: #aaa;
+      font-style: italic; }
+  #chat .message-draft {
+    position: fixed;
+    bottom: 0px;
+    left: 260px; }
+
+/*# sourceMappingURL=msgcat.css.map */

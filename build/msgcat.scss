@@ -1,0 +1,89 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: sans-serif; }
+
+#sidebar {
+  width: 240px;
+  float: left;
+  background: #333;
+  color: #ddd;
+  padding-left: 20px; }
+  #sidebar .connection-info {
+    background: #292929;
+    margin: 0 0 20px -20px;
+    padding: 5px 0 10px 20px; }
+  #sidebar .private-chats {
+    margin-bottom: 20px; }
+    #sidebar .private-chats h3 {
+      position: relative;
+      margin-bottom: 10px; }
+      #sidebar .private-chats h3 .add-contact {
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 0px;
+        width: 16px;
+        height: 16px;
+        color: #b1b1b1;
+        border: solid 2px #b1b1b1;
+        border-radius: 12px;
+        text-align: center;
+        line-height: 16px;
+        font-weight: bold;
+        cursor: pointer; }
+        #sidebar .private-chats h3 .add-contact::before {
+          content: '+'; }
+        #sidebar .private-chats h3 .add-contact:hover {
+          border-color: #ddd;
+          color: #ddd; }
+    #sidebar .private-chats .subscribe-form {
+      border-radius: 5px;
+      background: #4d4d4d; }
+      #sidebar .private-chats .subscribe-form input, #sidebar .private-chats .subscribe-form button {
+        background: none;
+        color: #ddd;
+        font-size: 16px;
+        outline: none;
+        border: none;
+        display: inline-block;
+        width: 50%; }
+  #sidebar .channel-list {
+    list-style: none; }
+    #sidebar .channel-list .channel {
+      cursor: pointer;
+      line-height: 1.5em;
+      margin-left: -5px;
+      padding-left: 5px;
+      margin-right: 10px;
+      border-radius: 5px;
+      margin-bottom: 2px; }
+      #sidebar .channel-list .channel .presence-icon {
+        display: inline-block;
+        margin-right: 3px; }
+      #sidebar .channel-list .channel:hover {
+        background: #404040; }
+      #sidebar .channel-list .channel[data-selected="true"] {
+        background: #4d4d4d; }
+      #sidebar .channel-list .channel[data-presence="available"] .presence-icon::before {
+        content: '●'; }
+      #sidebar .channel-list .channel[data-presence="away"] .presence-icon {
+        color: #6f6f6f; }
+        #sidebar .channel-list .channel[data-presence="away"] .presence-icon::before {
+          content: '●'; }
+      #sidebar .channel-list .channel[data-presence="unavailable"] .presence-icon {
+        color: #6f6f6f; }
+        #sidebar .channel-list .channel[data-presence="unavailable"] .presence-icon::before {
+          content: '○'; }
+
+#chat {
+  margin-left: 250px; }
+  #chat .message-draft {
+    position: fixed;
+    bottom: 0px;
+    left: 260px; }
+
+/*# sourceMappingURL=msgcat.scss.map */
