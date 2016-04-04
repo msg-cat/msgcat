@@ -1,7 +1,7 @@
-#connect {
+@mixin dialog($width, $height) {
     box-sizing: border-box;
-    width: 400px;
-    height: 180px;
+    width: $width;
+    height: $height;
     margin: auto;
     padding: 20px;
     position: relative;
@@ -14,7 +14,13 @@
         font-size: 16px;
         position: absolute;
         bottom: 30px;
+    }
+}
 
+#connect {
+    @include dialog(400px, 180px);
+
+    button {
         &.connect {
             right: 35px;
             font-weight: bold;
@@ -22,6 +28,22 @@
         }
 
         &.register {
+            left: 20px;
+        }
+    }
+}
+
+#register {
+    @include dialog(400px, 270px);
+
+    button {
+        &.register {
+            right: 35px;
+            font-weight: bold;
+            background: #cfd;
+        }
+
+        &.connect {
             left: 20px;
         }
     }

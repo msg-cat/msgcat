@@ -25,6 +25,10 @@ export default class ConnectionStore extends BasicStore {
       Dispatcher.dispatchLater('connect');
     }
 
+    if(this.state.register && this.state.register.error) {
+      delete this.state.register.error;
+    }
+
     Dispatcher.register('update-connection', (key, value) => {
       this.state.connection[key] = value;
       this._changed();
@@ -52,6 +56,66 @@ export default class ConnectionStore extends BasicStore {
       this.privateChats.purgeAndReset();
       this.connection.disconnect();
     });
+
+    Dispatcher.register('go-register', () => {
+      this.state.register = {
+        host: 'localhost',
+        username: '',
+        password: '',
+        passwordConfirmation: ''
+      };
+      this._changed();
+    });
+
+    Dispatcher.register('go-connect', () => {
+      this.state.register = undefined;
+      this._changed();
+    });
+
+    Dispatcher.register('update-registration', (key, value) => {
+      this.state.register[key] = value;
+      this._changed();
+    });
+
+    Dispatcher.register('register', () => {
+      let reg = this.state.register;
+      if(reg.password !== reg.passwordConfirmation) {
+        reg.error = "Password does not match confirmation";
+        this._changed();
+        return;
+      }
+      this.connection = new Strophe.Connection(this.state.connection.boshService);
+      this.connection.addHandler((stanza) => {
+        console.log('reg stanza', stanza);
+        return true;
+      });
+      this.connection.register.connect(reg.host, status => {
+        console.log('reg status', toStatusString(status));
+        let error;
+        if(status === Strophe.Status.REGISTER) {
+          this.connection.register.fields.username = reg.username;
+          this.connection.register.fields.password = reg.password;
+          this.connection.register.submit();
+        } else if(status === Strophe.Status.REGISTERED) {
+          this.state.connection.jid = `${reg.username}@${reg.host}`;
+          this.state.connection.error = '';
+          this.state.register = undefined;
+          this._changed();
+        } else if(status === Strophe.Status.REGIFAIL) {
+          error = "Registration failed";
+        } else if(status === Strophe.Status.CONFLICT) {
+          error = "The username is already taken!";
+        } else if(status === Strophe.Status.NOTACCEPTABLE) {
+          error = "Server does not accept this";
+        }
+        if(error) {
+          reg.error = error;
+          this.connection.disconnect();
+          delete this.connection;
+          this._changed();
+        }
+      });
+    });
   }
 
   _updateStatus(status) {
@@ -63,6 +127,8 @@ export default class ConnectionStore extends BasicStore {
       this.privateChats.setConnection(this.connection);
     } else if(status == Strophe.Status.DISCONNECTED) {
       this._setupSubStores();
+    } else if(status == Strophe.Status.REGISTERED) {
+      console.log('NOW REGISTERED');
     }
   }
 
@@ -71,4 +137,13 @@ export default class ConnectionStore extends BasicStore {
     this.channels = new ChannelsStore(this);
     this.privateChats = new PrivateChatsStore(this);
   }
+}
+
+function toStatusString(status) {
+  for(let name in Strophe.Status) {
+    if(Strophe.Status[name] === status) {
+      return name;
+    }
+  }
+  return 'UNKNOWN(' + status + ')';
 }

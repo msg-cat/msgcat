@@ -26,7 +26,7 @@ export default class Layout extends React.Component {
     return (
       <div>
         <style>{this._css()}</style>
-        {this._render()}
+        {this.state.register ? <Register {...this.state.register} /> : this._render()}
       </div>
     );
   }
@@ -80,9 +80,8 @@ export default class Layout extends React.Component {
   _css() {
     let { height, width } = this.state.windowSize;
     return [
-      `#sidebar { height: ${height}px; }`,
-      `#chat { height: ${height}px; }`,
-      `#connect { margin-top: ${(height/2) - 160}px; }`
+      `#sidebar, #chat { height: ${height}px; }`,
+      `#connect, #register { margin-top: ${(height/2) - 160}px; }`
     ].join('\n');
   }
 }
