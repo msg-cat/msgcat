@@ -24,7 +24,7 @@ export default class Connect extends React.Component {
                    onChange={e => this.handleChange('password', e)} />
           </div>
           <div className="input-row">
-            <button className="register" onClick={e => this._register(e)}>Register New Account</button>
+            <button className="register" type="button" onClick={e => this.handleRegister(e)}>Register New Account</button>
             <button className="connect" type="submit">Connect</button>
           </div>
         </form>
@@ -39,5 +39,10 @@ export default class Connect extends React.Component {
 
   handleChange(key, event) {
     Dispatcher.dispatch('update-connection', key, event.target.value);
+  }
+
+  handleRegister(e) {
+    e.preventDefault();
+    Dispatcher.dispatch('go-register');
   }
 }
