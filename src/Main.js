@@ -24,7 +24,8 @@ export default class Main extends React.Component {
   }
 
   render() {
-    let chat = world.privateChats.getChat(world.roster.selected);
+    let chat = world.privateChats.getChat(this.state.roster.selected);
+    console.log('current chat', chat);
     return (
       <div id="main">
         <SideBar {...this.state} />
