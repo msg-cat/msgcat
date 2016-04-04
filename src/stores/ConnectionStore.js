@@ -16,12 +16,12 @@ export default class ConnectionStore extends BasicStore {
       }
     }, 'connection-store');
 
-    this.roster = new RosterStore(this);
-    this.channels = new ChannelsStore(this);
-    this.privateChats = new PrivateChatsStore(this);
+    this._setupSubStores();
 
     // TODO: dispatch this from the real "world" (which controls the layout)!
-    if(this.state.connection.status == Strophe.Status.CONNECTED) {
+    if(this.state.connection.status == Strophe.Status.CONNECTED ||
+       this.state.connection.status == Strophe.Status.CONNECTING) {
+      this.state.connection.status = Strophe.Status.CONNECTING;
       Dispatcher.dispatchLater('connect');
     }
 
@@ -42,6 +42,16 @@ export default class ConnectionStore extends BasicStore {
         status => this._updateStatus(status)
       );
     });
+
+    Dispatcher.register('disconnect', () => {
+      this.state.connection.jid = '';
+      this.state.connection.password = '';
+      this._changed();
+      this.roster.purgeAndReset();
+      this.channels.purgeAndReset();
+      this.privateChats.purgeAndReset();
+      this.connection.disconnect();
+    });
   }
 
   _updateStatus(status) {
@@ -51,7 +61,14 @@ export default class ConnectionStore extends BasicStore {
       this.roster.setConnection(this.connection);
       this.channels.setConnection(this.connection);
       this.privateChats.setConnection(this.connection);
+    } else if(status == Strophe.Status.DISCONNECTED) {
+      this._setupSubStores();
     }
   }
 
+  _setupSubStores() {
+    this.roster = new RosterStore(this);
+    this.channels = new ChannelsStore(this);
+    this.privateChats = new PrivateChatsStore(this);
+  }
 }

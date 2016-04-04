@@ -15,8 +15,23 @@ form {
             line-height: 18px;
             padding: 5px 10px;
             outline: none;
+            width: 200px;
 
             &:focus {
+                border-color: #333;
+            }
+        }
+
+        button {
+            border: solid 1px #aaa;
+            border-radius: 5px;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            padding: 5px 20px;
+            outline: none;
+
+            &:hover {
                 border-color: #333;
             }
         }

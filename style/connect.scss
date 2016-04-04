@@ -4,13 +4,25 @@
     height: 180px;
     margin: auto;
     padding: 20px;
+    position: relative;
     border-radius: 10px;
     border: solid 1px #333;
     box-shadow: 0px 5px 5px 4px #999;
 
     button {
         display: block;
-        width: 180px;
-        margin: auto;
+        font-size: 16px;
+        position: absolute;
+        bottom: 30px;
+
+        &.connect {
+            right: 35px;
+            font-weight: bold;
+            background: #cfd;
+        }
+
+        &.register {
+            left: 20px;
+        }
     }
 }

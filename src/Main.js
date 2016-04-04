@@ -11,7 +11,16 @@ export default class Main extends React.Component {
       roster: world.roster.state,
       privateChats: world.privateChats
     };
-    world.roster.onChange(() => this.setState({ roster: world.roster.state }));
+
+    this._updateRoster = this._updateRoster.bind(this);
+  }
+
+  componentDidMount() {
+    world.roster.onChange(this._updateRoster);
+  }
+
+  componentWillUnmount() {
+    world.roster.removeChangeHandler(this._updateRoster)
   }
 
   render() {
@@ -22,5 +31,9 @@ export default class Main extends React.Component {
         {chat && <Conversation {...chat} />}
       </div>
     );
+  }
+
+  _updateRoster() {
+    this.setState({ roster: world.roster.state })
   }
 }

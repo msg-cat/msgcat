@@ -24,7 +24,8 @@ export default class Connect extends React.Component {
                    onChange={e => this.handleChange('password', e)} />
           </div>
           <div className="input-row">
-            <button type="submit">Connect</button>
+            <button className="register" onClick={e => this._register(e)}>Register New Account</button>
+            <button className="connect" type="submit">Connect</button>
           </div>
         </form>
       </div>

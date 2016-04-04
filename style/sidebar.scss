@@ -9,6 +9,52 @@
         background: $sidebar_background * 0.8;
         margin: 0 0 20px -20px;
         padding: 5px 0 10px 20px;
+        position: relative;
+
+        h3 {
+            margin-top: 10px;
+        }
+
+        .dropdown-control {
+            &::before { content: '▼'; }
+            position: absolute;
+            right: 10px;
+            top: 15px;
+            cursor: pointer;
+            color: $sidebar_color * 0.8;
+            &:hover {
+                color: $sidebar_color * 1.2;
+            }
+        }
+
+        .dropdown {
+            background: $sidebar_color;
+            color: $sidebar_background;
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            padding: 10px 10px;
+            border-radius: 5px;
+            z-index: 100;
+            min-width: 180px;
+
+            .dropdown-item {
+                line-height: 25px;
+                border-top: solid 1px $sidebar_background * 1.4;
+                font-weight: bold;
+                cursor: pointer;
+                padding: 0 5px;
+
+                &:hover {
+                    color: $sidebar_color;
+                    background: $sidebar_background * 1.4;
+                }
+
+                &:first-child {
+                    border-top: none;
+                }
+            }
+        }
     }
 
     .private-chats {

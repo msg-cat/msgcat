@@ -1,5 +1,6 @@
 export default class BasicStore {
   constructor(initialState, key) {
+    this.initialState = initialState;
     this.state = initialState;
     this.key = key;
     this._changeHandlers = [];
@@ -13,6 +14,18 @@ export default class BasicStore {
   // state.
   onChange(handler) {
     this._changeHandlers.push(handler);
+  }
+
+  removeChangeHandler(handler) {
+    this._changeHandlers = this._changeHandlers.filter(h => h !== handler);
+  }
+
+  purgeAndReset() {
+    if(this.key) {
+      delete sessionStorage[this.key];
+    }
+    this._changeHandlers = [];
+    this.state = this.initialState;
   }
 
   // Called by subclasses, after this.state was modified to notify listeners.
