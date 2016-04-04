@@ -2,7 +2,7 @@ import React from 'react';
 
 import world from './world';
 import SideBar from './SideBar';
-import Conversation from './Conversation';
+import Chat from './Chat';
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -25,11 +25,10 @@ export default class Main extends React.Component {
 
   render() {
     let chat = world.privateChats.getChat(this.state.roster.selected);
-    console.log('current chat', chat);
     return (
       <div id="main">
         <SideBar {...this.state} />
-        {chat && <Conversation {...chat} />}
+        {chat && <Chat {...chat} />}
       </div>
     );
   }
