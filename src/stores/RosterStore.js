@@ -18,7 +18,7 @@ export default class RosterStore extends BasicStore {
   constructor(world) {
     super({
       // list of items stored in the roster
-      items: [],
+      privateChats: [],
       // map of bare JIDs to a presence object.
       presence: {},
       // incoming presence subscriptions
@@ -42,6 +42,11 @@ export default class RosterStore extends BasicStore {
       this.state.selected = jid;
       this._changed();
     });
+
+    Dispatcher.register('subscribe-contact', jid => this.addContact(jid));
+    Dispatcher.register('set-my-presence', show => this.setMyPresence(show));
+    Dispatcher.register('accept-subscription', jid => this.acceptSubscription(jid));
+    Dispatcher.register('reject-subscription', jid => this.rejectSubscription(jid));
   }
 
   // INTERNAL. called by ConnectionStore, once a connection is established.
@@ -95,27 +100,31 @@ export default class RosterStore extends BasicStore {
   }
 
   _rosterChanged(items, ...rest) {
-    this.state.items = items;
+    this.state.privateChats = items;
     this._changed();
   }
 
   _onPresence(presence) {
     try {
-    let type = presence.getAttribute('type');
-    let from = presence.getAttribute('from');
-    if(type == 'subscribe') {
-      this.state.subscriptions.push({
-        from: util.bareJID(from)
-      });
-    } else {
-      let pres = this.state.presence[util.bareJID(from)];
-      if(!pres) {
-        pres = {};
+      let type = presence.getAttribute('type');
+      let from = presence.getAttribute('from');
+      switch(type) {
+      case 'subscribe':
+        this.state.subscriptions.push({
+          from: util.bareJID(from)
+        });
+        break
+      case 'error':
+        break;
+      default:
+        let pres = this.state.presence[util.bareJID(from)];
+        if(!pres) {
+          pres = {};
+        }
+        let showElement = presence.getElementsByTagName('show')[0];
+        pres.show = showElement ? showElement.textContent || 'available' : 'unavailable';
+        this.state.presence[util.bareJID(from)] = pres;
       }
-      let showElement = presence.getElementsByTagName('show')[0];
-      pres.show = showElement ? showElement.textContent || 'available' : 'unavailable';
-      this.state.presence[util.bareJID(from)] = pres;
-    }
       this._changed();
     } catch(e) {
       console.error(e);

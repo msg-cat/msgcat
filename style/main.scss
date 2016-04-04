@@ -15,6 +15,48 @@ body {
     color: $sidebar_color;
     padding-left: 20px;
 
+    .private-chats {
+        h3 {
+            position: relative;
+            .add-contact {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 0px;
+                width: 16px;
+                height: 16px;
+                color: $sidebar_color * 0.8;
+                border: solid 2px $sidebar_color * 0.8;
+                border-radius: 12px;
+                text-align: center;
+                line-height: 16px;
+                font-weight: bold;
+                cursor: pointer;
+
+                &::before { content: '+'; }
+                &:hover {
+                    border-color: $sidebar_color;
+                    color: $sidebar_color;
+                }
+            }
+        }
+
+        .subscribe-form {
+            border-radius: 5px;
+            background: $sidebar_background * 1.5;
+
+            input, button {
+                background: none;
+                color: $sidebar_color;
+                font-size: 16px;
+                outline: none;
+                border: none;
+                display: inline-block;
+                width: 50%;
+            }
+        }
+    }
+
     .channel-list {
         list-style: none;
         padding: 0;

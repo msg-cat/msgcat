@@ -13,6 +13,7 @@ export default {
     if(dispatching) {
       throw new Error("Dispatching within dispatch!");
     }
+    console.log('DISPATCH(' + type + ')', args);
     dispatching = true;
     if(handlers[type]) {
       try {
