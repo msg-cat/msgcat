@@ -32,7 +32,6 @@ export default class Layout extends React.Component {
   }
 
   _render() {
-    this.saveState();
     switch(this.state.connection.status) {
     case Strophe.Status.ERROR:
       return <Connect {...this.state} error={"Something went wrong. Not sure what."} />;
@@ -61,20 +60,6 @@ export default class Layout extends React.Component {
     }
   }
 
-  saveState() {
-    sessionStorage.msgcatState = JSON.stringify(this.state);
-  }
-
-  restoreState() {
-    try {
-      this.state = JSON.parse(sessionStorage.msgcatState)
-    } catch(e) { /* ignore */ }
-
-    if(this.state.connection.status == Strophe.Status.CONNECTED) {
-      Dispatcher.dispatchLater('connect');
-    }
-  }
-
   addMessage(msg) {
     let chat = this.state.chat;
     chat.messages = chat.messages.concat([msg]);
@@ -93,9 +78,11 @@ export default class Layout extends React.Component {
 
   // returns dynamic CSS declarations
   _css() {
+    let { height, width } = this.state.windowSize;
     return [
-      `#sidebar { height: ${this.state.windowSize.height}px; }`,
-      `#chat { height: ${this.state.windowSize.height}px; }`
+      `#sidebar { height: ${height}px; }`,
+      `#chat { height: ${height}px; }`,
+      `#connect { margin-top: ${(height/2) - 160}px; }`
     ].join('\n');
   }
 }

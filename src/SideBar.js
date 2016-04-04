@@ -1,5 +1,4 @@
 import React from 'react';
-import Roster from './Roster';
 import world from './world';
 
 import PrivateChats from './sidebar/PrivateChats';

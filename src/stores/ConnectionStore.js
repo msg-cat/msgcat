@@ -45,7 +45,7 @@ export default class ConnectionStore extends BasicStore {
   }
 
   _updateStatus(status) {
-    Dispatcher.dispatch('update-connection', 'status', status);
+    Dispatcher.dispatchLater('update-connection', 'status', status);
     if(status == Strophe.Status.CONNECTED) {
       this.connection.send($pres());
       this.roster.setConnection(this.connection);

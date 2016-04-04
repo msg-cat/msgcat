@@ -34,10 +34,6 @@ export default class RosterStore extends BasicStore {
     }, 'roster-store');
     this.world = world;
 
-    if(this.state.selected) {
-      Dispatcher.dispatchLater('switch-to', this.state.selected);
-    }
-
     Dispatcher.register('switch-to', jid => {
       this.state.selected = jid;
       this._changed();
@@ -58,6 +54,9 @@ export default class RosterStore extends BasicStore {
     this.state.me.jid = util.bareJID(connection.jid);
     this.state.me.resource = util.resourceFromJID(connection.jid);
     this.setMyPresence(this.state.me.presence);
+    if(this.state.selected) {
+      Dispatcher.dispatchLater('switch-to', this.state.selected);
+    }
   }
 
   // Set (and publish) the user's own presence

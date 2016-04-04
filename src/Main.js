@@ -2,22 +2,24 @@ import React from 'react';
 
 import world from './world';
 import SideBar from './SideBar';
-import Chat from './Chat';
+import Conversation from './Conversation';
 
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      roster: world.roster.state
+      roster: world.roster.state,
+      privateChats: world.privateChats
     };
     world.roster.onChange(() => this.setState({ roster: world.roster.state }));
   }
 
   render() {
+    let chat = world.privateChats.getChat(world.roster.selected);
     return (
       <div id="main">
         <SideBar {...this.state} />
-        <Chat {...this.props} />
+        {chat && <Conversation {...chat} />}
       </div>
     );
   }

@@ -10,12 +10,12 @@ export default class Connect extends React.Component {
   render() {
     return (
       <div id="connect">
-        <h2>Connect</h2>
         {this.props.error && <strong style={{color:'red'}}>{this.props.error}</strong>}
         <form className="connect-form" onSubmit={e => this.handleSubmit(e)}>
           <div className="input-row">
             <label htmlFor="#connect-jid">JID</label>
             <input type="email" id="connect-jid" value={this.props.connection.jid}
+                   autoFocus={true}
                    onChange={e => this.handleChange('jid', e)} />
           </div>
           <div className="input-row">
