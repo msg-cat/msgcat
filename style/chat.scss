@@ -1,6 +1,20 @@
 #chat {
     margin-left: $sidebar_width + 10px;
 
+    h3 {
+        height: 50px;
+        box-sizing: border-box;
+        border-bottom: solid 1px #aaa;
+        padding: 15px 0 10px 20px;
+        .presence-hint {
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 14px;
+            color: #aaa;
+            font-style: italic;
+        }
+    }
+
     .message-draft {
         position: fixed;
         bottom: 0px;

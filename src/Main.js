@@ -25,15 +25,20 @@ export default class Main extends React.Component {
 
   render() {
     let chat = world.privateChats.getChat(this.state.roster.selected);
+    let peerPresence = chat && this._getPresence(chat.jid);
     return (
       <div id="main">
         <SideBar {...this.state} />
-        {chat && <Chat {...chat} />}
+        {chat && <Chat {...chat} presence={peerPresence} />}
       </div>
     );
   }
 
   _updateRoster() {
     this.setState({ roster: world.roster.state })
+  }
+
+  _getPresence(jid) {
+    return this.state.roster.presence[jid] || { show: 'unavailable' };
   }
 }
