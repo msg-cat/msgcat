@@ -47,12 +47,34 @@ form .input-row {
     font-size: 16px;
     position: absolute;
     bottom: 30px; }
-    #connect button.connect {
-      right: 35px;
-      font-weight: bold;
-      background: #cfd; }
-    #connect button.register {
-      left: 20px; }
+  #connect button.connect {
+    right: 35px;
+    font-weight: bold;
+    background: #cfd; }
+  #connect button.register {
+    left: 20px; }
+
+#register {
+  box-sizing: border-box;
+  width: 400px;
+  height: 270px;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+  border-radius: 10px;
+  border: solid 1px #333;
+  box-shadow: 0px 5px 5px 4px #999; }
+  #register button {
+    display: block;
+    font-size: 16px;
+    position: absolute;
+    bottom: 30px; }
+  #register button.register {
+    right: 35px;
+    font-weight: bold;
+    background: #cfd; }
+  #register button.connect {
+    left: 20px; }
 
 #sidebar {
   width: 240px;
